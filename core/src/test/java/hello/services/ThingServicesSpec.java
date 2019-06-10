@@ -1,5 +1,9 @@
 package hello.services;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+
 import hello.domain.Thing;
 import hello.domain.errors.ThingAlreadyExist;
 import hello.infrastructure.Database;
@@ -8,22 +12,22 @@ import hello.infrastructure.adapters.h2.H2Database;
 import hello.repository.ThingRepositoryMock;
 import hello.repository.ThingsH2RepositoryImpl;
 import io.vavr.control.Option;
-import org.junit.After;
-import org.junit.Test;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
+import org.junit.After;
+import org.junit.Test;
 
 public class ThingServicesSpec {
 
   @After
   public void end() {
     Database database = new H2Database();
-    database.handleStatement(dbi -> dbi.open(MembersDAO.class), d -> { d.truncate(); return null; });
+    database.handleStatement(
+        dbi -> dbi.open(MembersDAO.class),
+        d -> {
+          d.truncate();
+          return null;
+        });
   }
 
   @Test

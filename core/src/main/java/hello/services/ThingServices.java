@@ -8,6 +8,7 @@ import hello.repository.dtos.ThingDTO;
 import io.vavr.control.Option;
 import java.util.concurrent.CompletableFuture;
 
+// @org.springframework.stereotype.Service
 public class ThingServices implements Service<Thing, Integer> {
 
   private final ThingsRepository repository;

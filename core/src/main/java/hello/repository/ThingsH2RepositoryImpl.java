@@ -26,12 +26,6 @@ public class ThingsH2RepositoryImpl implements ThingsRepository {
     Database h2Database = new H2Database();
     ThingDTO thing =
         h2Database.handleStatement(dbi -> dbi.open(MembersDAO.class), d -> d.findById(id));
-    // ThingDTO thing = h.createQuery("select memberid, membername from members where memberid =
-    // :id")
-    //        .bind("id", id.toString())
-    //        .map(new ThingDTOMapper())
-    //        .first();
-    // ds.dispose();
     return CompletableFuture.completedFuture(Option.of(thing));
   }
 }

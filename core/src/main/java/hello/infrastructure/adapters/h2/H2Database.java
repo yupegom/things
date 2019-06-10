@@ -6,7 +6,7 @@ import org.h2.jdbcx.JdbcConnectionPool;
 
 public class H2Database extends Database {
 
-  private static final DataSource ds = JdbcConnectionPool.create("jdbc:h2:~/test", "", "");
+  private static final DataSource ds = JdbcConnectionPool.create("jdbc:h2:~/things", "", "");
 
   public H2Database() {
     super(ds);

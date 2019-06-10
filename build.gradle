@@ -8,9 +8,9 @@ buildscript {
     }
 }
 
-//plugins {
-//  id "com.diffplug.gradle.spotless" version "3.23.0"
-//}
+plugins {
+  id "com.diffplug.gradle.spotless" version "3.23.0"
+}
 
 
 subprojects {
@@ -19,6 +19,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.springframework.boot'
+    apply plugin: 'com.diffplug.gradle.spotless'
     repositories {
         mavenCentral()
     }
@@ -26,17 +27,22 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     
+    // remove hibernate things
+    configurations {
+       all*.exclude group: "org.hibernate", module: "hibernate-entitymanager"
+           all*.exclude group: "org.apache.tomcat", module: "tomcat-jdbc"
+    }
+
     dependencies {
           compile "org.springframework.boot:spring-boot-starter-web"
           testCompile "org.springframework.boot:spring-boot-starter-test"
     }
     
-    
-//    spotless {
-//      java {
-//        googleJavaFormat()
-//      }
-//    }
+    spotless {
+      java {
+        googleJavaFormat()
+      }
+    }
     
     //jar {
     //    baseName = 'things'
