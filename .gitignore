@@ -190,3 +190,5 @@ gradle/
 gradlew/
 .gradle
 gradlew
+core/build/
+http/build/

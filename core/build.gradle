@@ -1,0 +1,20 @@
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    baseName = 'things-core'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile "joda-time:joda-time:2.2"
+    compile "io.vavr:vavr:1.0.0-alpha-2"
+    compile "org.jdbi:jdbi:2.78"
+    compile "com.h2database:h2:1.4.199"
+    testCompile "junit:junit:4.12"
+    testCompile "io.vavr:vavr:1.0.0-alpha-2"
+    testCompile "org.jdbi:jdbi:2.78"
+    testCompile "junit:junit:4.12"
+    testCompile "org.hamcrest:hamcrest:2.1"
+}
