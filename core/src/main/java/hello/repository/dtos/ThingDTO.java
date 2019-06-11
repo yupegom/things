@@ -1,5 +1,7 @@
 package hello.repository.dtos;
 
+import hello.domain.Thing;
+
 public final class ThingDTO {
   private final int id;
   private final String name;
@@ -15,5 +17,9 @@ public final class ThingDTO {
 
   public int getId() {
     return this.id;
+  }
+
+  public Thing toDomainThing() {
+    return new Thing(this.id, this.name);
   }
 }

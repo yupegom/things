@@ -6,9 +6,8 @@ import hello.infrastructure.CompletableFutureUtilities;
 import hello.repository.ThingsRepository;
 import hello.repository.dtos.ThingDTO;
 import io.vavr.control.Option;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.concurrent.CompletableFuture;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Service
 public class ThingServices implements Service<Thing, Integer> {
@@ -31,12 +30,12 @@ public class ThingServices implements Service<Thing, Integer> {
               // mayBeThing.isDefined()
               //        ? CompletableFutureUtilities.failedFuture(new ThingAlreadyExist())
               //        : repository.insert(new ThingDTO(thing.getId(), thing.getName()))
-              if (mayBeThing.isDefined())
-                return CompletableFutureUtilities.failedFuture(new ThingAlreadyExist());
-              else
-                return repository
-                    .insert(new ThingDTO(thing.getId(), thing.getName()))
-                    .thenApply(thingDTO -> new Thing(thingDTO.getId(), thingDTO.getName()));
+              return mayBeThing.fold(
+                  () ->
+                      repository
+                          .insert(new ThingDTO(thing.getId(), thing.getName()))
+                          .thenApply(ThingDTO::toDomainThing),
+                  x -> CompletableFutureUtilities.failedFuture(new ThingAlreadyExist()));
             });
   }
 
@@ -44,8 +43,6 @@ public class ThingServices implements Service<Thing, Integer> {
   public CompletableFuture<Option<Thing>> obtainThing(Integer id) {
     return repository
         .query(id)
-        .thenApply(
-            mayBeThingDTO ->
-                mayBeThingDTO.map(thingDTO -> new Thing(thingDTO.getId(), thingDTO.getName())));
+        .thenApply(mayBeThingDTO -> mayBeThingDTO.map(ThingDTO::toDomainThing));
   }
 }

@@ -3,6 +3,7 @@ package hello.services;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.fail;
 
 import hello.domain.Thing;
 import hello.domain.errors.ThingAlreadyExist;
@@ -97,7 +98,9 @@ public class ThingServicesSpec {
         service.save(thing).thenCompose(i -> service.save(thing));
     try {
       eventuallyMayBeThing.get();
+      fail("It should throw the exception");
     } catch (ExecutionException ce) {
+      System.out.println("What is going on");
       assertThat(ce.getCause(), instanceOf(ThingAlreadyExist.class));
     }
   }
@@ -109,6 +112,7 @@ public class ThingServicesSpec {
     CompletableFuture<Thing> eventuallyMayBeThing = service.save(thing);
     try {
       eventuallyMayBeThing.get();
+      fail("It should throw the exception");
     } catch (ExecutionException ce) {
       assertThat(ce.getCause(), instanceOf(ThingAlreadyExist.class));
     }
