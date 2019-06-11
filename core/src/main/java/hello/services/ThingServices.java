@@ -6,6 +6,8 @@ import hello.infrastructure.CompletableFutureUtilities;
 import hello.repository.ThingsRepository;
 import hello.repository.dtos.ThingDTO;
 import io.vavr.control.Option;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.concurrent.CompletableFuture;
 
 @org.springframework.stereotype.Service
@@ -13,6 +15,7 @@ public class ThingServices implements Service<Thing, Integer> {
 
   private final ThingsRepository repository;
 
+  @Autowired
   public ThingServices(ThingsRepository repository) {
     this.repository = repository;
   }
