@@ -5,10 +5,7 @@ import hello.infrastructure.adapters.http.api.responses.ThingNotFound;
 import hello.repository.ThingsH2RepositoryImpl;
 import hello.services.ThingServices;
 import java.util.concurrent.CompletableFuture;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Queries {
@@ -28,5 +25,10 @@ public class Queries {
                       throw new ThingNotFound(String.format("Thing %d is not here", id));
                     },
                     x -> x));
+  }
+
+  @PostMapping(value = "/things", consumes = "application/json", produces = "application/json")
+  public @ResponseBody CompletableFuture<Integer> saveAThing(@RequestBody Thing thing) {
+    return services.save(thing);
   }
 }
