@@ -6,7 +6,9 @@ import hello.infrastructure.adapters.h2.H2Database;
 import hello.repository.dtos.ThingDTO;
 import io.vavr.control.Option;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ThingsH2RepositoryImpl implements ThingsRepository {
 
   @Override
