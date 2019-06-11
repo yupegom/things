@@ -16,6 +16,6 @@ public class ThingExceptionController {
 
   @ExceptionHandler(value = ThingAlreadyExist.class)
   public ResponseEntity<Object> exception(ThingAlreadyExist exception) {
-    return new ResponseEntity<>("Thing already exits", HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>("Thing already exits", HttpStatus.BAD_REQUEST);
   }
 }

@@ -12,7 +12,7 @@ public class Queries {
 
   //    @Autowired
   //  ThingServices services;
-  ThingServices services = new ThingServices(new ThingsH2RepositoryImpl());
+  private final ThingServices services = new ThingServices(new ThingsH2RepositoryImpl());
 
   @RequestMapping("/things/{id}")
   public @ResponseBody CompletableFuture<Thing> giveAThing(@PathVariable int id) {
@@ -25,10 +25,5 @@ public class Queries {
                       throw new ThingNotFound(String.format("Thing %d is not here", id));
                     },
                     x -> x));
-  }
-
-  @PostMapping(value = "/things", consumes = "application/json", produces = "application/json")
-  public @ResponseBody CompletableFuture<Integer> saveAThing(@RequestBody Thing thing) {
-    return services.save(thing);
   }
 }
