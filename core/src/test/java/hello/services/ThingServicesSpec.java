@@ -77,22 +77,23 @@ public class ThingServicesSpec {
   @Test
   public void saveThing() throws Exception {
     ThingServices service = new ThingServices(new ThingsH2RepositoryImpl());
-    CompletableFuture<Integer> eventuallyThing =
+    Thing thing = new Thing(1, "test5");
+    CompletableFuture<Thing> eventuallyThing =
         service
-            .save(new Thing(11, "test5"))
+            .save(thing)
             .exceptionally(
                 ex -> {
                   System.out.println("Something went wrong" + ex);
-                  return 0;
+                  return null;
                 });
-    assertThat(eventuallyThing.get(), equalTo(1));
+    assertThat(eventuallyThing.get(), equalTo(thing));
   }
 
   @Test
   public void failSavingThingInH2() throws Exception {
     ThingServices service = new ThingServices(new ThingsH2RepositoryImpl());
     Thing thing = new Thing(1, "test");
-    CompletableFuture<Integer> eventuallyMayBeThing =
+    CompletableFuture<Thing> eventuallyMayBeThing =
         service.save(thing).thenCompose(i -> service.save(thing));
     try {
       eventuallyMayBeThing.get();
@@ -105,7 +106,7 @@ public class ThingServicesSpec {
   public void failSavingThingInMock() throws Exception {
     ThingServices service = new ThingServices(new ThingRepositoryMock());
     Thing thing = new Thing(1, "test");
-    CompletableFuture<Integer> eventuallyMayBeThing = service.save(thing);
+    CompletableFuture<Thing> eventuallyMayBeThing = service.save(thing);
     try {
       eventuallyMayBeThing.get();
     } catch (ExecutionException ce) {

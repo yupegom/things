@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class ThingsH2RepositoryImpl implements ThingsRepository {
 
   @Override
-  public CompletableFuture<Integer> insert(ThingDTO thing) {
+  public CompletableFuture<ThingDTO> insert(ThingDTO thing) {
     Database h2Database = new H2Database();
     h2Database.handleStatement(
         dbi -> dbi.open(MembersDAO.class),
@@ -20,7 +20,7 @@ public class ThingsH2RepositoryImpl implements ThingsRepository {
           d.insert(thing.getId(), thing.getName());
           return null;
         });
-    return CompletableFuture.completedFuture(1);
+    return CompletableFuture.completedFuture(thing);
   }
 
   @Override

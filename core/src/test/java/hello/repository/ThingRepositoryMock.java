@@ -8,11 +8,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class ThingRepositoryMock implements ThingsRepository {
   @Override
-  public CompletableFuture<Integer> insert(ThingDTO thing) {
+  public CompletableFuture<ThingDTO> insert(ThingDTO thing) {
     return CompletableFuture.supplyAsync(
         () -> {
           state.put(thing.getId(), thing);
-          return 1;
+          return thing;
         });
   }
 

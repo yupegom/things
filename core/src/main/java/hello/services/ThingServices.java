@@ -18,7 +18,7 @@ public class ThingServices implements Service<Thing, Integer> {
   }
 
   @Override
-  public CompletableFuture<Integer> save(Thing thing) {
+  public CompletableFuture<Thing> save(Thing thing) {
     return repository
         .query(thing.getId())
         .thenCompose(
@@ -30,7 +30,10 @@ public class ThingServices implements Service<Thing, Integer> {
               //        : repository.insert(new ThingDTO(thing.getId(), thing.getName()))
               if (mayBeThing.isDefined())
                 return CompletableFutureUtilities.failedFuture(new ThingAlreadyExist());
-              else return repository.insert(new ThingDTO(thing.getId(), thing.getName()));
+              else
+                return repository
+                    .insert(new ThingDTO(thing.getId(), thing.getName()))
+                    .thenApply(thingDTO -> new Thing(thingDTO.getId(), thingDTO.getName()));
             });
   }
 

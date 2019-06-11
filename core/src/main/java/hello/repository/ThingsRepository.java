@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
 public interface ThingsRepository extends Repository<ThingDTO, Integer> {
 
   @Override
-  CompletableFuture<Integer> insert(ThingDTO thing);
+  CompletableFuture<ThingDTO> insert(ThingDTO thing);
 
   @Override
   CompletableFuture<Option<ThingDTO>> query(Integer id);

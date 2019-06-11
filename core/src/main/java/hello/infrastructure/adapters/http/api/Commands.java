@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Commands {
 
-  @Autowired private Service services;
+  @Autowired private Service<Thing, Integer> services;
 
   @PostMapping(value = "/things", consumes = "application/json", produces = "application/json")
-  public @ResponseBody CompletableFuture<Integer> saveAThing(@RequestBody Thing thing) {
+  public @ResponseBody CompletableFuture<Thing> saveAThing(@RequestBody Thing thing) {
     return services.save(thing);
   }
 }
