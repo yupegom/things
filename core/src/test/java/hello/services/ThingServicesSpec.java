@@ -100,7 +100,6 @@ public class ThingServicesSpec {
       eventuallyMayBeThing.get();
       fail("It should throw the exception");
     } catch (ExecutionException ce) {
-      System.out.println("What is going on");
       assertThat(ce.getCause(), instanceOf(ThingAlreadyExist.class));
     }
   }

@@ -24,19 +24,13 @@ public class ThingServices implements Service<Thing, Integer> {
     return repository
         .query(thing.getId())
         .thenCompose(
-            mayBeThing -> {
-              // Either<Error, Void> ignore = Eithe
-              //      .cond(mayBeThing.isDefined(), () -> {throw new Exception("")}, () -> null);
-              // mayBeThing.isDefined()
-              //        ? CompletableFutureUtilities.failedFuture(new ThingAlreadyExist())
-              //        : repository.insert(new ThingDTO(thing.getId(), thing.getName()))
-              return mayBeThing.fold(
-                  () ->
-                      repository
-                          .insert(new ThingDTO(thing.getId(), thing.getName()))
-                          .thenApply(ThingDTO::toDomainThing),
-                  x -> CompletableFutureUtilities.failedFuture(new ThingAlreadyExist()));
-            });
+            mayBeThing ->
+                mayBeThing.fold(
+                    () ->
+                        repository
+                            .insert(new ThingDTO(thing.getId(), thing.getName()))
+                            .thenApply(ThingDTO::toDomainThing),
+                    t -> CompletableFutureUtilities.failedFuture(new ThingAlreadyExist())));
   }
 
   @Override
