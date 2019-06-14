@@ -1,0 +1,22 @@
+
+apply plugin: 'application'
+mainClassName = 'hello.Application'
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    baseName = 'things-kafka'
+    version = '0.0.1-SNAPSHOT'
+}
+ext {
+  kafkaVersion = '2.0.0'
+  reactorVersion = '1.1.1.RELEASE'
+}
+dependencies {
+    compile "io.vavr:vavr:1.0.0-alpha-2"
+    compile "org.apache.kafka:kafka-clients:$kafkaVersion"
+    compile "io.projectreactor.kafka:reactor-kafka:$reactorVersion"
+    testCompile "junit:junit:4.12"
+    testCompile "io.vavr:vavr:1.0.0-alpha-2"
+}

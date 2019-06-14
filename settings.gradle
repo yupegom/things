@@ -1,3 +1,4 @@
 rootProject.name = 'things'
 include 'http'
 include 'core'
+include 'kafka'

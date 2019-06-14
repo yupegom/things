@@ -29,8 +29,7 @@ public class Queries {
   @HystrixCommand(fallbackMethod = "iFailed")
   @GetMapping("/things/mayFail/{fail}")
   public String mayFail(@PathVariable String fail) throws Exception {
-    if(fail.contentEquals("fail"))
-      throw new Exception("Fail!");
+    if (fail.contentEquals("fail")) throw new Exception("Fail!");
     else return "OK";
   }
 
